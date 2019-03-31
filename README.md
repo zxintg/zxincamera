@@ -22,7 +22,7 @@ and:
 
 ```gradle
 dependencies {
-    implementation 'com.github.zxintg:routerhelper:{latest version}'
+    implementation 'com.github.zxintg:zxincamea:{latest version}'
 }
 ```
 
