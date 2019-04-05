@@ -20,11 +20,10 @@ import com.zxin.camera.utils.FileImageUtils;
 import com.zxin.camera.view.ListImageDirPopupWindow;
 import com.zxin.camera.adapter.SimpleAdapter;
 import com.zxin.camera.adapter.TrdViewHolder;
-import com.zxin.camera.utils.ImageUtil;
-import com.zxin.camera.utils.SystemBarTintManager;
-import com.zxin.zxinlib.view.CommonCrosswiseBar;
-import com.zxin.zxinlib.view.RefreshCommonView;
-import android.content.Context;
+import com.zxin.root.util.ImageUtil;
+import com.zxin.root.util.SystemBarTintManager;
+import com.zxin.root.view.CommonCrosswiseBar;
+import com.zxin.root.view.RefreshCommonView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,7 +61,7 @@ public class AlbumActivity extends AppCompatActivity implements RefreshCommonVie
         fileUtils = new FileImageUtils(this);
     }
 
-    private void setDates(Context mContext) {
+    private void setDates() {
         //家长端
         mTitle.setLeftButton(R.mipmap.ic_black_left_arrow);
         mTitle.setBGColor(R.color.color_ffffff);
@@ -75,7 +74,7 @@ public class AlbumActivity extends AppCompatActivity implements RefreshCommonVie
                 ImageView ivGallery = holder.getView(R.id.iv_album_image);
                 int with = (mContext.getResources().getDisplayMetrics().widthPixels - 40) / 3;
                 ivGallery.setLayoutParams(new RelativeLayout.LayoutParams(with, with));
-                ImageUtil.loadImageViewLoding(mContext, mImgDir.getAbsolutePath() + "/" + data, holder.<ImageView>getView(R.id.iv_album_image), R.mipmap.default_iamge, R.mipmap.default_iamge);
+                ImageUtil.getInstance(mContext).loadImageViewLoding(mImgDir.getAbsolutePath() + "/" + data, holder.<ImageView>getView(R.id.iv_album_image), R.mipmap.default_iamge, R.mipmap.default_iamge);
                 ivGallery.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

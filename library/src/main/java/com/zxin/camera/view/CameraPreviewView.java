@@ -132,7 +132,7 @@ public class CameraPreviewView extends SurfaceView {
             camera.setPreviewDisplay(holder);//通过surfaceview显示取景画面
             camera.startPreview();//开始预览
             //设置相机参数
-            CameraParams.getInstance().setParameter(getContext(), camera, i,isFace);
+            CameraParams.getInstance(getContext()).setParameter(camera, i,isFace);
         } catch (IOException e) {
             e.printStackTrace();
         }

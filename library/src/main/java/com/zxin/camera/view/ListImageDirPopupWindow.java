@@ -11,7 +11,8 @@ import com.zxin.camera.R;
 import com.zxin.camera.model.ImageFloder;
 import com.zxin.camera.adapter.SimpleAdapter;
 import com.zxin.camera.adapter.TrdViewHolder;
-import com.zxin.camera.utils.ImageUtil;
+import com.zxin.root.util.ImageUtil;
+
 import java.util.List;
 
 /**
@@ -43,7 +44,7 @@ public class ListImageDirPopupWindow extends PopupWindow {
                                 }
                             }
                 });
-                ImageUtil.loadImageViewLoding(mContext , data.getFirstImagePath(), holder.<ImageView>getView(R.id.iv_album_image),R.mipmap.default_iamge,R.mipmap.default_iamge);
+                ImageUtil.getInstance(mContext).loadImageViewLoding(data.getFirstImagePath(), holder.<ImageView>getView(R.id.iv_album_image),R.mipmap.default_iamge,R.mipmap.default_iamge);
             }
         });
         setFocusable(true);

@@ -2,13 +2,16 @@ package com.zxin.camera.utils;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentManager;
+
 import com.zxin.camera.activity.AlbumActivity;
 import com.zxin.camera.activity.AlbumPreviewActivity;
 import com.zxin.camera.activity.CameraActivity;
 import com.zxin.camera.callback.IPhotoCall;
 import com.zxin.camera.model.PhotoPreviewBean;
-import com.zxin.camera.utils.SystemPersimManage;
+import com.zxin.root.app.SystemPersimManage;
+import com.zxin.root.util.BaseStringUtils;
+import com.zxin.root.util.SystemInfoUtil;
+import com.zxin.root.view.dialog.NiceDialog;
 
 /*****
  * 相机操作工具
@@ -17,20 +20,47 @@ import com.zxin.camera.utils.SystemPersimManage;
  *
  */
 public class CameraAlbumUtils {
-    private static volatile CameraAlbumUtils cameraAlbumUtil = null;
-    private static Context context;
+    private static CameraAlbumUtils cameraAlbumUtil;
+    private static Context mContext;
 
-    private CameraAlbumUtils(){}
+    private NiceDialog niceDialog;
+
+    private CameraAlbumUtils(Context mContext) {
+        this.mContext = mContext;
+    }
 
     public static CameraAlbumUtils getInstance(Context mContext) {
-        context = mContext;
-        if (cameraAlbumUtil == null){
-            synchronized (CameraAlbumUtils.this){
-                if (cameraAlbumUtil == null){
-                    cameraAlbumUtil = new CameraAlbumUtils();
+        if (cameraAlbumUtil == null) {
+            synchronized (CameraAlbumUtils.class) {
+                if (cameraAlbumUtil == null) {
+                    cameraAlbumUtil = new CameraAlbumUtils(mContext);
                 }
             }
         }
+
+        return cameraAlbumUtil;
+    }
+
+    /****
+     * 拍照片或重相册中获取
+     */
+    public CameraAlbumUtils getPhoto() {
+        if (niceDialog == null) {
+            niceDialog = NiceDialog.init();
+        }
+        niceDialog.setOnNiceDialogListener(new NiceDialog.NiceDialogListener() {
+            @Override
+            public void onItemListener(int index, String item) {
+                if (item.equals("拍照")) {
+                    //相机拍照
+                    checkCameraPermission();
+                } else {
+                    //相册
+                    checkAlbumPermission();
+                }
+            }
+        });
+        niceDialog.setCommonLayout(new String[]{"从相册选择", "拍照"}, true);
         return cameraAlbumUtil;
     }
 
@@ -70,11 +100,11 @@ public class CameraAlbumUtils {
     }
 
     public int getWith() {
-        return with == -1 ? context.getResources().getDisplayMetrics().widthPixels : with;
+        return with == -1 ? SystemInfoUtil.getInstance(mContext).getScreenWidth() : with;
     }
 
     public int getHeight() {
-        return height == -1 ? context.getResources().getDisplayMetrics().heightPixels : height;
+        return height == -1 ? SystemInfoUtil.getInstance(mContext).getScreenHeight() : height;
     }
 
     /******
@@ -82,11 +112,11 @@ public class CameraAlbumUtils {
      * liukui 2017/05/19
      */
     public void checkCameraPermission() {
-        new SystemPersimManage(context) {
+        new SystemPersimManage(mContext) {
             @Override
             public void resultPerm(boolean isCan, int requestCode) {
                 if (isCan)
-                    context.startActivity(new Intent(context, CameraActivity.class));
+                    mContext.startActivity(new Intent(mContext, CameraActivity.class));
             }
         }.CheckedCamera();
     }
@@ -96,18 +126,18 @@ public class CameraAlbumUtils {
      * liukui 2017/05/19
      */
     public void checkAlbumPermission() {
-        new SystemPersimManage(context) {
+        new SystemPersimManage(mContext) {
             @Override
             public void resultPerm(boolean isCan, int requestCode) {
                 if (isCan)
-                    context.startActivity(new Intent(context, AlbumActivity.class));
+                    mContext.startActivity(new Intent(mContext, AlbumActivity.class));
             }
         }.CheckedAlbum();
     }
 
 
     public void startAlbumPreviewActivity(PhotoPreviewBean previewBean) {
-        context.startActivity(new Intent(context, AlbumPreviewActivity.class).putExtra(StringUtils.ACTIVITY_DATA, previewBean));
+        mContext.startActivity(new Intent(mContext, AlbumPreviewActivity.class).putExtra(BaseStringUtils.ACTIVITY_DATA, previewBean));
     }
 
     private IPhotoCall callI;

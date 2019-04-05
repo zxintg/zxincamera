@@ -24,9 +24,11 @@ import com.zxin.camera.crop.view.TransformImageView;
 import com.zxin.camera.crop.view.UCropView;
 import com.zxin.camera.utils.CameraAlbumUtils;
 import com.zxin.camera.utils.VanCropType;
-import com.zxin.camera.utils.FileUtil;
-import com.zxin.camera.utils.SystemBarTintManager;
-import com.zxin.zxinlib.view.CommonCrosswiseBar;
+import com.zxin.root.util.FileUtil;
+import com.zxin.root.util.LogUtils;
+import com.zxin.root.util.SystemBarTintManager;
+import com.zxin.root.util.ToastUtil;
+import com.zxin.root.view.CommonCrosswiseBar;
 
 import java.io.File;
 import java.io.OutputStream;
@@ -241,7 +243,7 @@ public class ImageTailorActivity extends AppCompatActivity{
                 mGestureCropImageView.setMaxResultImageSizeX(maxSizeX);
                 mGestureCropImageView.setMaxResultImageSizeY(maxSizeY);
             } else {
-                Log.d(TAG,"jiemo_EXTRA_MAX_SIZE_X and EXTRA_MAX_SIZE_Y must be greater than 0");
+                LogUtils.d("jiemo_EXTRA_MAX_SIZE_X and EXTRA_MAX_SIZE_Y must be greater than 0");
             }
         }
     }
@@ -291,7 +293,7 @@ public class ImageTailorActivity extends AppCompatActivity{
      *
      */
     private void setResultException() {
-        Toast.makeText(this, "裁剪图片失败", Toast.LENGTH_SHORT).show();
+        ToastUtil.getInstance(this).showShort("裁剪图片失败");
         onBackPressed();
     }
 
@@ -311,7 +313,7 @@ public class ImageTailorActivity extends AppCompatActivity{
                 outputStream = getContentResolver().openOutputStream(mOutputUri);
                 croppedBitmap.compress(Bitmap.CompressFormat.JPEG, 85, outputStream);
                 croppedBitmap.recycle();
-                CameraAlbumUtils.getInstance(this).getIPhotoCall().onPhotoResult(FileUtil.getInstance().getRealPathFromURI(mOutputUri));
+                CameraAlbumUtils.getInstance(this).getIPhotoCall().onPhotoResult(FileUtil.getInstance(this).getRealPathFromURI(mOutputUri));
                 finish();
             } else {
                 setResultException();

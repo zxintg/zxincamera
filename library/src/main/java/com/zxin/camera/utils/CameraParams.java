@@ -7,6 +7,9 @@ import android.hardware.Camera;
 import android.hardware.Camera.Size;
 import android.util.Log;
 import android.view.Surface;
+
+import com.zxin.root.util.SystemInfoUtil;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -22,13 +25,13 @@ public class CameraParams {
     private final int minSize = 640;//最小尺寸
     private static double screenRatio = 1.33;//长宽比
     public int oritation;//旋转角度
-    private static Context context;
+    private static Context mContext;
 
     private CameraParams() {
     }
 
     public static CameraParams getInstance(Context context) {
-        this.context = context;
+        mContext = context;
         if (cameraParams == null) {
             synchronized (CameraParams.class) {
                 if (cameraParams == null) {
@@ -36,17 +39,16 @@ public class CameraParams {
                 }
             }
         }
-        screenRatio = (double) getScreenHeight() / getScreenWidth();
+        screenRatio = (double) SystemInfoUtil.getInstance(mContext).getScreenHeight() / SystemInfoUtil.getInstance(mContext).getScreenWidth();
         return cameraParams;
     }
 
     /**
-     * @param context
      * @param camera
      * @param cameraId 前置 后置摄像头
      */
 
-    public void setCameraParams(Context context, Camera camera, int cameraId) {
+    public void setCameraParams(Camera camera, int cameraId) {
         Camera.Parameters parameters = camera.getParameters();
         // 获取摄像头支持的PictureSize列表
         List<Size> pictureSizeList = parameters.getSupportedPictureSizes();
@@ -72,18 +74,18 @@ public class CameraParams {
         parameters.setJpegQuality(100); // 设置照片质量
         parameters.set("orientation", "portrait");
         //parameters.set("rotation", 180);//保存图片旋转180度解决方法
-        setOrientation(context, camera, cameraId);
+        setOrientation(camera, cameraId);
         camera.setParameters(parameters);
     }
 
     /*** 设置照片格式*/
-    public void setParameter(Context context, Camera camera, int cameraId, boolean isFace) {
+    public void setParameter(Camera camera, int cameraId, boolean isFace) {
         Camera.Parameters parameters = camera.getParameters(); // 获取各项参数
         parameters.setPictureFormat(PixelFormat.JPEG); // 设置图片格式
         parameters.setJpegQuality(100); // 设置照片质量//获得相机支持的照片尺寸,选择合适的尺寸
         // 获取摄像头支持的PictureSize列表
         List<Size> sizes = parameters.getSupportedPictureSizes();
-        int maxSize = Math.max(getScreenWidth(), getScreenHeight());
+        int maxSize = Math.max(SystemInfoUtil.getInstance(mContext).getScreenWidth(), SystemInfoUtil.getInstance(mContext).getScreenHeight());
         int length = sizes.size();
         if (maxSize > 0) {
             for (int i = 0; i < length; i++) {
@@ -106,15 +108,15 @@ public class CameraParams {
         }
         if (isFace)
             parameters.set("rotation", 180);//保存图片旋转180度解决方法
-        setOrientation(context, camera, cameraId);
+        setOrientation(camera, cameraId);
         camera.setParameters(parameters);
     }
 
     //保证预览方向正确
-    private void setOrientation(Context context, Camera camera, int cameraId) {
+    private void setOrientation(Camera camera, int cameraId) {
         Camera.CameraInfo info = new Camera.CameraInfo();
         Camera.getCameraInfo(cameraId, info);
-        int rotation = ((Activity) context).getWindowManager().getDefaultDisplay().getRotation();
+        int rotation = ((Activity) mContext).getWindowManager().getDefaultDisplay().getRotation();
 
         int degrees = 0;
         switch (rotation) {
@@ -163,17 +165,4 @@ public class CameraParams {
         }
     }
 
-    /**
-     * 得到设备屏幕的宽度
-     */
-    private int getScreenWidth() {
-        return context.getResources().getDisplayMetrics().widthPixels;
-    }
-
-    /**
-     * 得到设备屏幕的高度
-     */
-    private int getScreenHeight() {
-        return context.getResources().getDisplayMetrics().heightPixels;
-    }
 }

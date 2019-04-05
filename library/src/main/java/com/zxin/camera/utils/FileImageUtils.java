@@ -20,7 +20,8 @@ import android.util.Log;
 import com.zxin.camera.R;
 import com.zxin.camera.model.ImageFloder;
 import com.zxin.camera.model.LocalAlbum;
-import com.zxin.camera.utils.StringUtils;
+import com.zxin.root.util.BaseStringUtils;
+
 import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -49,7 +50,7 @@ public class FileImageUtils {
         //Bitmap waterMarkBitmap = createWaterMarkBitmap(bitmap, rect);
         //设置bitmap旋转
         Matrix matrix = new Matrix();
-        matrix.setRotate(CameraParams.getInstance().oritation);
+        matrix.setRotate(CameraParams.getInstance(context).oritation);
         bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 
         File fileFolder = new File(Environment.getExternalStorageDirectory() + "/Pictures/");
@@ -81,7 +82,7 @@ public class FileImageUtils {
     private Bitmap createWaterMarkBitmap(Bitmap bitmap, Rect rect) {
         //设置bitmap旋转
         Matrix matrix = new Matrix();
-        matrix.setRotate(CameraParams.getInstance().oritation);
+        matrix.setRotate(CameraParams.getInstance(context).oritation);
         bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 
         //宽高为矩形的宽高
@@ -132,9 +133,9 @@ public class FileImageUtils {
 
         Bitmap rectbitmap = null;
         //横竖屏--按比例割取图片
-        if (CameraParams.getInstance().oritation == 90) {
+        if (CameraParams.getInstance(context).oritation == 90) {
             rectbitmap = Bitmap.createBitmap(bm, 0, bm.getHeight() * rect.top / getScreenHeight(), bm.getWidth(), bm.getHeight() * hight / getScreenHeight());
-        } else if (CameraParams.getInstance().oritation == 0) {
+        } else if (CameraParams.getInstance(context).oritation == 0) {
             rectbitmap = Bitmap.createBitmap(bm, bm.getWidth() * rect.left / getScreenHeight(), 0, bm.getWidth() * width / getScreenHeight(), bm.getHeight());
         }
         if (!bm.isRecycled()) {
@@ -214,7 +215,7 @@ public class FileImageUtils {
                     imageFloder.setCount(urlList.size());//传入每个相册的图片个数
                     mAlbumList.add(imageFloder);//添加每一个相册
                     //获取 Camera 文件夹信息（显示的是 Camera 图片的相册
-                    if (StringUtils.textIsEmpty(selectPath)) {
+                    if (BaseStringUtils.textIsEmpty(selectPath)) {
                         if (parentName.equals("Camera"))
                             mImgDir = parentFile;
                     }else{

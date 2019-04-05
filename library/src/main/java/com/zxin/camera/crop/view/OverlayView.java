@@ -15,7 +15,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.zxin.camera.R;
-import com.zxin.zxinlib.util.SystemInfoUtil;
+import com.zxin.root.util.SystemInfoUtil;
 
 /**
  * Created by Oleksii Shliama (https://github.com/shliama).
@@ -186,11 +186,10 @@ public class OverlayView extends View {
             mCropViewRect.set(getPaddingLeft(), getPaddingTop() + halfDiff,
                     getPaddingLeft() + mThisWidth, getPaddingTop() + height + halfDiff);
         }*/
-        int margeX = (SystemInfoUtil.getScreenWidth()-mThisWidth)/2;
-        int headY = (SystemInfoUtil.getScreenHeight() - getMeasuredHeight())/2;
-        int margeY = (SystemInfoUtil.getScreenHeight()-mThisHeight)/2;
-        SystemInfoUtil.getScreenWidth();
-        mCropViewRect.set(margeX, margeY-headY, SystemInfoUtil.getScreenWidth() - margeX ,SystemInfoUtil.getScreenHeight() - margeY - headY);
+        int margeX = (SystemInfoUtil.getInstance(getContext()).getScreenWidth()-mThisWidth)/2;
+        int headY = (SystemInfoUtil.getInstance(getContext()).getScreenHeight() - getMeasuredHeight())/2;
+        int margeY = (SystemInfoUtil.getInstance(getContext()).getScreenHeight()-mThisHeight)/2;
+        mCropViewRect.set(margeX, margeY-headY, SystemInfoUtil.getInstance(getContext()).getScreenWidth() - margeX ,SystemInfoUtil.getInstance(getContext()).getScreenHeight() - margeY - headY);
 
         mGridPoints = null;
         mCircularPath.reset();

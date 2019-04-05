@@ -15,16 +15,12 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
-import com.zxin.camera.R;
 import com.zxin.camera.crop.util.BitmapLoadUtils;
 import com.zxin.camera.crop.util.FastBitmapDrawable;
 import com.zxin.camera.crop.util.RectUtils;
-import com.zxin.camera.utils.FileUtil;
-import com.zxin.camera.utils.ImageUtil;
-
-import java.io.File;
+import com.zxin.root.util.FileUtil;
+import com.zxin.root.util.ImageUtil;
 
 /**
  * Created by Oleksii Shliama (https://github.com/shliama).
@@ -132,7 +128,7 @@ public class TransformImageView extends android.support.v7.widget.AppCompatImage
         int maxBitmapSize = getMaxBitmapSize();
         //ImageUtil.loadImageViewLoding(getContext() , imageUri, this , R.mipmap.default_iamge,R.mipmap.default_iamge);
         ImageUtil.getInstance(getContext()).getDigreeFromFilePath(imageUri);
-        BitmapLoadUtils.decodeBitmapInBackground(getContext(), FileUtil.getInstance().getImageContentUri(imageUri), maxBitmapSize, maxBitmapSize,
+        BitmapLoadUtils.decodeBitmapInBackground(getContext(), FileUtil.getInstance(getContext()).getImageContentUri(imageUri), maxBitmapSize, maxBitmapSize,
                 new BitmapLoadUtils.BitmapLoadCallback() {
                     @Override
                     public void onBitmapLoaded(@NonNull final Bitmap bitmap) {

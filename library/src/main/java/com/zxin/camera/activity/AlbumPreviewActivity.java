@@ -18,8 +18,9 @@ import com.zxin.camera.R;
 import com.zxin.camera.fragment.AlbumFragment;
 import com.zxin.camera.model.PhotoPreviewBean;
 import com.zxin.camera.view.PhotoView;
-import com.zxin.camera.utils.StringUtils;
-import com.zxin.camera.utils.SystemBarTintManager;
+import com.zxin.root.util.BaseStringUtils;
+import com.zxin.root.util.SystemBarTintManager;
+
 import java.util.ArrayList;
 import java.util.List;
 

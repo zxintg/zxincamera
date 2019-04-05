@@ -11,8 +11,8 @@ import com.zxin.camera.R;
 import com.zxin.camera.activity.AlbumPreviewActivity;
 import com.zxin.camera.model.PhotoPreviewBean;
 import com.zxin.camera.view.PhotoView;
-import com.zxin.camera.utils.StringUtils;
-import com.zxin.camera.utils.ImageUtil;
+import com.zxin.root.util.BaseStringUtils;
+import com.zxin.root.util.ImageUtil;
 
 /**
  * Created by Administrator on 2018/9/4.
@@ -25,7 +25,7 @@ public class AlbumFragment extends Fragment {
     public static AlbumFragment newInstance(PhotoPreviewBean.PhotoPreview previewBean) {
         AlbumFragment fragment = new AlbumFragment();
         Bundle args = new Bundle();
-        args.putParcelable(StringUtils.FRAGMENT_DATA, previewBean);
+        args.putParcelable(BaseStringUtils.FRAGMENT_DATA, previewBean);
         fragment.setArguments(args);
         return fragment;
     }
@@ -39,7 +39,7 @@ public class AlbumFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         isViewCreated = true;
-        previewBean = getArguments().getParcelable(StringUtils.FRAGMENT_DATA);
+        previewBean = getArguments().getParcelable(BaseStringUtils.FRAGMENT_DATA);
         mPhotoView = (PhotoView) view.findViewById(R.id.pv_album);
 
         mPhotoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
@@ -79,7 +79,7 @@ public class AlbumFragment extends Fragment {
             //数据加载完毕,恢复标记,防止重复加载
             isViewCreated = false;
             isUIVisible = false;
-            ImageUtil.getInstance(getContext()).loadImageViewProgress(getContext(), previewBean.imageUrl, mPhotoView ,R.mipmap.default_iamge, R.drawable.ugc_choose_photo_pressed);
+            ImageUtil.getInstance(getContext()).loadImageViewProgress(previewBean.imageUrl, mPhotoView ,R.mipmap.default_iamge, R.drawable.ugc_choose_photo_pressed);
         }
     }
 

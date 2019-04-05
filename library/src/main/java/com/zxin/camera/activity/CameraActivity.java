@@ -21,8 +21,8 @@ import com.zxin.camera.utils.CameraAlbumUtils;
 import com.zxin.camera.view.CameraPreviewView;
 import com.zxin.camera.utils.FileImageUtils;
 import com.zxin.camera.utils.ScaleGestureListener;
-import com.zxin.camera.utils.SystemBarTintManager;
-import com.zxin.zxinlib.view.dialog.ProgressBarDialog;
+import com.zxin.root.util.SystemBarTintManager;
+import com.zxin.root.view.dialog.ProgressBarDialog;
 
 import java.io.File;
 
