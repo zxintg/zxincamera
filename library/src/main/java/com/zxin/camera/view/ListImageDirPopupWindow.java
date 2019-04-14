@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import com.zxin.camera.R;
 import com.zxin.camera.model.ImageFloder;
-import com.zxin.camera.adapter.SimpleAdapter;
-import com.zxin.camera.adapter.TrdViewHolder;
+import com.zxin.root.adapter.simple.SimpleAdapter;
+import com.zxin.root.adapter.simple.TrdViewHolder;
 import com.zxin.root.util.ImageUtil;
 
 import java.util.List;
