@@ -10,7 +10,7 @@ import android.widget.PopupWindow;
 import com.zxin.camera.R;
 import com.zxin.camera.model.ImageFloder;
 import com.zxin.root.adapter.simple.SimpleAdapter;
-import com.zxin.root.adapter.simple.TrdViewHolder;
+import com.zxin.root.adapter.simple.ZxinViewHolder;
 import com.zxin.root.util.ImageUtil;
 
 import java.util.List;
@@ -32,7 +32,7 @@ public class ListImageDirPopupWindow extends PopupWindow {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));//设置垂直
         mRecyclerView.setAdapter(new SimpleAdapter<ImageFloder>(context, mImageFloders, R.layout.item_alnum_file) {
             @Override
-            protected void onBindViewHolder(TrdViewHolder holder, final ImageFloder data) {
+            protected void onBindViewHolder(ZxinViewHolder holder, final ImageFloder data, int type) {
                 holder.setText(R.id.iv_album_title, data.getName())
                         .setText(R.id.iv_album_num,"共 "+data.getCount()+" 张")
                         .setOnItemListener(new View.OnClickListener() {
@@ -43,7 +43,7 @@ public class ListImageDirPopupWindow extends PopupWindow {
                                     onImageDirSelected.albumSelected(imageFloder);
                                 }
                             }
-                });
+                        });
                 ImageUtil.getInstance(mContext).loadImageViewLoding(data.getFirstImagePath(), holder.<ImageView>getView(R.id.iv_album_image),R.mipmap.default_iamge,R.mipmap.default_iamge);
             }
         });

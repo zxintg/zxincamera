@@ -19,7 +19,7 @@ import com.zxin.camera.utils.CameraAlbumUtils;
 import com.zxin.camera.utils.FileImageUtils;
 import com.zxin.camera.view.ListImageDirPopupWindow;
 import com.zxin.root.adapter.simple.SimpleAdapter;
-import com.zxin.root.adapter.simple.TrdViewHolder;
+import com.zxin.root.adapter.simple.ZxinViewHolder;
 import com.zxin.root.util.ImageUtil;
 import com.zxin.root.util.SystemBarTintManager;
 import com.zxin.root.view.CommonCrosswiseBar;
@@ -70,7 +70,7 @@ public class AlbumActivity extends AppCompatActivity implements RefreshCommonVie
         mTitle.setRightTextColor(R.color.color_666666);
         adapter = new SimpleAdapter<String>(this, imageList, R.layout.item_album) {
             @Override
-            protected void onBindViewHolder(TrdViewHolder holder, final String data) {
+            protected void onBindViewHolder(ZxinViewHolder holder, final String data, int type) {
                 ImageView ivGallery = holder.getView(R.id.iv_album_image);
                 int with = (mContext.getResources().getDisplayMetrics().widthPixels - 40) / 3;
                 ivGallery.setLayoutParams(new RelativeLayout.LayoutParams(with, with));
