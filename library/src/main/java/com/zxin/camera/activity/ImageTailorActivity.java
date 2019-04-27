@@ -25,9 +25,9 @@ import com.zxin.camera.crop.view.UCropView;
 import com.zxin.camera.utils.CameraAlbumUtils;
 import com.zxin.camera.utils.VanCropType;
 import com.zxin.root.util.FileUtil;
-import com.zxin.root.util.LogUtils;
 import com.zxin.root.util.SystemBarTintManager;
 import com.zxin.root.util.ToastUtil;
+import com.zxin.root.util.logger.LogUtils;
 import com.zxin.root.view.CommonCrosswiseBar;
 
 import java.io.File;
@@ -43,7 +43,7 @@ import java.util.Locale;
 
 public class ImageTailorActivity extends AppCompatActivity{
 
-    private static final String TAG = "ImageTailorActivity";
+    private static final LogUtils.Tag TAG = new LogUtils.Tag("ImageTailorActivity");
 
     private CommonCrosswiseBar mTitle;
     private UCropView mUCropView;
@@ -243,7 +243,7 @@ public class ImageTailorActivity extends AppCompatActivity{
                 mGestureCropImageView.setMaxResultImageSizeX(maxSizeX);
                 mGestureCropImageView.setMaxResultImageSizeY(maxSizeY);
             } else {
-                LogUtils.d("jiemo_EXTRA_MAX_SIZE_X and EXTRA_MAX_SIZE_Y must be greater than 0");
+                LogUtils.d(TAG,"jiemo_EXTRA_MAX_SIZE_X and EXTRA_MAX_SIZE_Y must be greater than 0");
             }
         }
     }
